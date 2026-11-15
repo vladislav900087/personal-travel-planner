@@ -3,10 +3,29 @@ name: CI
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+
+    # run postgres service container for automated tests
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: travel
+          POSTGRES_PASSWORD: travel
+          POSTGRES_DB: travel_test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
     defaults:
       run:
         working-directory: backend
@@ -25,4 +44,11 @@ jobs:
         run: ruff check .
 
       - name: Test
+        env:
+          POSTGRES_HOST: 127.0.0.1
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: travel_test_db
+          POSTGRES_TEST_DB: travel_test_db
+          POSTGRES_USER: travel
+          POSTGRES_PASSWORD: travel
         run: pytest -v
