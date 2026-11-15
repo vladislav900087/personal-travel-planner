@@ -8,7 +8,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       # localhost only — not accessible from other machines
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -21,6 +21,9 @@ services:
       - db
     env_file:
       - .env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
     volumes:
       - ./backend:/app
 

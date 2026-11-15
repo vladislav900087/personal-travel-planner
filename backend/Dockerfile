@@ -4,7 +4,7 @@ WORKDIR /app
 
 # install dependencies first (cached if pyproject.toml hasn't changed)
 COPY pyproject.toml .
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir ".[dev]"
 
 COPY . .
 
