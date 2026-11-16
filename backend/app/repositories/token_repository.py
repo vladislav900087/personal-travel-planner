@@ -1,8 +1,9 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, update
-from app.models.refresh_token import RefreshToken
 import uuid
 
+from sqlalchemy import func, select, update
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.refresh_token import RefreshToken
 
 
 class TokenRepository:
@@ -42,11 +43,11 @@ class TokenRepository:
 
     async def revoke_all(self, user_id: uuid.UUID) -> None:
 
-        statement = (update(RefreshToken).where(RefreshToken.user_id == user_id, RefreshToken.revoked_at.is_(None)).values(revoked_at=func.now()))
+        statement = (
+            update(RefreshToken)
+            .where(RefreshToken.user_id == user_id, RefreshToken.revoked_at.is_(None))
+            .values(revoked_at=func.now())
+        )
 
         await self.db.execute(statement)
         await self.db.commit()
-
-
-
-

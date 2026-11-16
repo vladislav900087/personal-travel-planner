@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.config import settings
 from app.api.router import router as main_router
+from app.core.config import settings
 
 app = FastAPI(title="Personal Travel Planner", version="0.1.0")
 

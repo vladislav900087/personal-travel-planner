@@ -1,6 +1,8 @@
 import uuid
+
 import pytest
 from sqlalchemy.exc import IntegrityError
+
 from app.models.user import User
 
 
@@ -16,14 +18,20 @@ async def test_create_user(user_repo):
 
 
 async def test_create_duplicate_email_raises_error(user_repo):
-    await user_repo.create(User(email="dup@example.com", hashed_password="hashed_secret"))
+    await user_repo.create(
+        User(email="dup@example.com", hashed_password="hashed_secret")
+    )
 
     with pytest.raises(IntegrityError):
-        await user_repo.create(User(email="dup@example.com", hashed_password="hashed_secret"))
+        await user_repo.create(
+            User(email="dup@example.com", hashed_password="hashed_secret")
+        )
 
 
 async def test_get_by_id(user_repo):
-    user = await user_repo.create(User(email="bob@example.com", hashed_password="hashed_secret"))
+    user = await user_repo.create(
+        User(email="bob@example.com", hashed_password="hashed_secret")
+    )
 
     found_user = await user_repo.get_by_id(user.id)
 
@@ -36,7 +44,9 @@ async def test_get_by_id_not_found(user_repo):
 
 
 async def test_get_by_email(user_repo):
-    await user_repo.create(User(email="charlie@example.com", hashed_password="hashed_secret"))
+    await user_repo.create(
+        User(email="charlie@example.com", hashed_password="hashed_secret")
+    )
 
     found_user = await user_repo.get_by_email("charlie@example.com")
 
@@ -49,7 +59,9 @@ async def test_get_by_email_not_found(user_repo):
 
 
 async def test_update_user(user_repo):
-    user = await user_repo.create(User(email="old@example.com", hashed_password="hashed_secret"))
+    user = await user_repo.create(
+        User(email="old@example.com", hashed_password="hashed_secret")
+    )
 
     user.email = "new@example.com"
     user.is_active = False
@@ -60,10 +72,10 @@ async def test_update_user(user_repo):
 
 
 async def test_delete_user(user_repo):
-    user = await user_repo.create(User(email="dave@example.com", hashed_password="hashed_secret"))
+    user = await user_repo.create(
+        User(email="dave@example.com", hashed_password="hashed_secret")
+    )
 
     await user_repo.delete(user)
 
     assert await user_repo.get_by_id(user.id) is None
-
-

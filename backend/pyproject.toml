@@ -33,6 +33,7 @@ dev = [
 target-version = "py312"
 line-length = 88
 
+
 [tool.ruff.lint]
 select = [
     "E",    # pycodestyle errors
@@ -43,7 +44,7 @@ select = [
     "B",    # flake8-bugbear (common bugs)
     "SIM",  # flake8-simplify
 ]
-ignore = []
+ignore = ['B904']
 
 [tool.ruff.lint.per-file-ignores]
 "alembic/versions/*" = ["F401", "UP007", "UP035", "I001", "W291", "E501"]

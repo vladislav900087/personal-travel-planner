@@ -1,6 +1,8 @@
 import uuid
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.models.user import User
 
 
@@ -30,4 +32,3 @@ class UserRepository:
     async def delete(self, user: User) -> None:
         await self.db.delete(user)
         await self.db.commit()
-
