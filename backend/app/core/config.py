@@ -6,7 +6,6 @@ ROOT_DIR = Path(__file__).resolve().parents[3]
 
 
 class Settings(BaseSettings):
-
     # app
     app_env: str = "development"
     secret_key: str = "change-me-to-a-long-random-string"
