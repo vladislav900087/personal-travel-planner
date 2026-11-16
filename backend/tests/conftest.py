@@ -13,6 +13,8 @@ from app.core.config import settings
 from app.infrastructure.database import get_db
 from app.main import app
 from app.models.base import Base
+from app.repositories.user_repository import UserRepository
+from app.repositories.token_repository import TokenRepository
 
 # async engine for testing using NullPool (prevents connection sharing across loops)
 test_engine = create_async_engine(
@@ -57,3 +59,11 @@ async def client(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
         yield c
 
     app.dependency_overrides.clear()
+
+@pytest.fixture
+def user_repo(db_session):
+    return UserRepository(db_session)
+
+@pytest.fixture
+def token_repo(db_session):
+    return TokenRepository(db_session)
