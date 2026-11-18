@@ -1,5 +1,3 @@
-
-
 async def auth_headers(client, email: str = "traveler@example.com") -> dict[str, str]:
     await client.post(
         "/api/v1/auth/register",
