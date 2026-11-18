@@ -14,9 +14,10 @@ from app.infrastructure.database import get_db
 from app.main import app
 from app.models.base import Base
 from app.repositories.token_repository import TokenRepository
+from app.repositories.trip_repository import TripRepository
 from app.repositories.user_repository import UserRepository
+from app.services.trip_service import TripService
 
-# async engine for testing using NullPool (prevents connection sharing across loops)
 test_engine = create_async_engine(
     settings.test_database_url,
     poolclass=pool.NullPool,
@@ -39,14 +40,12 @@ async def setup_test_database():
         await conn.run_sync(Base.metadata.drop_all)
 
 
-# isolated db session for each test
 @pytest.fixture
 async def db_session() -> AsyncGenerator[AsyncSession, None]:
     async with test_session_maker() as session:
         yield session
 
 
-# test client with get_db overridden to use test session
 @pytest.fixture
 async def client(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
     async def override_get_db() -> AsyncGenerator[AsyncSession, None]:
@@ -69,3 +68,13 @@ def user_repo(db_session):
 @pytest.fixture
 def token_repo(db_session):
     return TokenRepository(db_session)
+
+
+@pytest.fixture
+def trip_repo(db_session):
+    return TripRepository(db_session)
+
+
+@pytest.fixture
+def trip_service(trip_repo, user_repo):
+    return TripService(repository=trip_repo, user_repository=user_repo)

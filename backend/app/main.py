@@ -8,7 +8,6 @@ app = FastAPI(title="Personal Travel Planner", version="0.1.0")
 
 app.include_router(main_router)
 
-# allow frontend to call the API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins.split(","),

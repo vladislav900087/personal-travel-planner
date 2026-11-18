@@ -8,7 +8,6 @@ from sqlalchemy.ext.asyncio import (
 
 from app.core.config import settings
 
-# async database engine and session factory
 engine = create_async_engine(
     settings.database_url,
     echo=(settings.app_env == "development"),
@@ -21,7 +20,6 @@ async_session_maker = async_sessionmaker(
 )
 
 
-# dependency to provide a db session per request
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with async_session_maker() as session:
         try:

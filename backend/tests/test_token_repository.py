@@ -110,11 +110,9 @@ async def test_delete_user_cascades_to_tokens(user_repo, token_repo):
 
 
 async def test_get_by_hash(user_repo, token_repo):
-
     user = await user_repo.create(
         User(email="eve@example.com", hashed_password="hashed_secret")
     )
-
     await token_repo.create(
         RefreshToken(
             user_id=user.id,
@@ -130,11 +128,9 @@ async def test_get_by_hash(user_repo, token_repo):
 
 
 async def test_revoke_all(user_repo, token_repo):
-
     user = await user_repo.create(
         User(email="eve@example.com", hashed_password="hashed_secret")
     )
-
     await token_repo.create(
         RefreshToken(
             user_id=user.id,
