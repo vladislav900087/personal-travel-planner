@@ -14,11 +14,9 @@ from app.infrastructure.database import get_db
 from app.main import app
 from app.models.base import Base
 from app.repositories.token_repository import TokenRepository
-
 from app.repositories.trip_repository import TripRepository
 from app.repositories.user_repository import UserRepository
 from app.services.trip_service import TripService
-
 
 test_engine = create_async_engine(
     settings.test_database_url,

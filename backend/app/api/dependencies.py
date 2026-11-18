@@ -10,9 +10,7 @@ from app.repositories.token_repository import TokenRepository
 from app.repositories.trip_repository import TripRepository
 from app.repositories.user_repository import UserRepository
 from app.services import auth_service
-
 from app.services.trip_service import TripService
-
 
 bearer = HTTPBearer()
 
@@ -39,6 +37,7 @@ def get_trip_service(repo: TripRepo, user_repo: UserRepo) -> TripService:
 
 
 TripService = Annotated[TripService, Depends(get_trip_service)]
+
 
 async def get_current_user(
     creds: Annotated[HTTPAuthorizationCredentials, Depends(bearer)], user_repo: UserRepo
