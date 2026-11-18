@@ -6,13 +6,10 @@ ROOT_DIR = Path(__file__).resolve().parents[3]
 
 
 class Settings(BaseSettings):
-
-    # app
     app_env: str = "development"
     secret_key: str = "change-me-to-a-long-random-string"
     allowed_origins: str = "http://localhost:3000"
 
-    # database
     postgres_user: str = "travel"
     postgres_password: str = "travel"
     postgres_db: str = "travel_db"
@@ -22,7 +19,6 @@ class Settings(BaseSettings):
 
     @property
     def resolved_host(self) -> str:
-        # fallback to localhost when running outside docker
         if self.postgres_host == "db":
             import socket
 
@@ -46,7 +42,6 @@ class Settings(BaseSettings):
             f"@{self.resolved_host}:{self.postgres_port}/{self.postgres_test_db}"
         )
 
-    # jwt
     access_token_expire_minutes: int = 30
     refresh_token_expire_days: int = 30
 

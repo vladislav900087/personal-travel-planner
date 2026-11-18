@@ -15,9 +15,9 @@ dependencies = [
     "python-jose[cryptography]>=3.3,<4",
     "passlib[bcrypt]>=1.7,<2",
     "httpx>=0.27,<1",
-    'pyjwt',
-    'pwdlib[argon2]',
-    'pydantic[email]'
+    "pyjwt",
+    "pwdlib[argon2]",
+    "pydantic[email]",
 ]
 
 [project.optional-dependencies]
@@ -28,22 +28,13 @@ dev = [
     "ruff>=0.8,<1",
 ]
 
-# Ruff
 [tool.ruff]
 target-version = "py312"
 line-length = 88
 
 [tool.ruff.lint]
-select = [
-    "E",    # pycodestyle errors
-    "W",    # pycodestyle warnings
-    "F",    # pyflakes
-    "I",    # isort (import sorting)
-    "UP",   # pyupgrade (modern Python syntax)
-    "B",    # flake8-bugbear (common bugs)
-    "SIM",  # flake8-simplify
-]
-ignore = []
+select = ["E", "W", "F", "I", "UP", "B", "SIM"]
+ignore = ["B904", "B008"]
 
 [tool.ruff.lint.per-file-ignores]
 "alembic/versions/*" = ["F401", "UP007", "UP035", "I001", "W291", "E501"]
@@ -51,11 +42,9 @@ ignore = []
 [tool.ruff.lint.isort]
 known-first-party = ["app"]
 
-#  Setuptools
 [tool.setuptools.packages.find]
 include = ["app*"]
 
-# Pytest
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]

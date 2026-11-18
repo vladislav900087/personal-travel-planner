@@ -10,6 +10,7 @@ from app.models.base import Base
 
 if TYPE_CHECKING:
     from app.models.refresh_token import RefreshToken
+    from app.models.trip import Trip
 
 
 class User(Base):
@@ -44,4 +45,8 @@ class User(Base):
     refresh_tokens: Mapped[list["RefreshToken"]] = relationship(
         back_populates="user",
         cascade="all, delete-orphan",
+    )
+
+    trips: Mapped[list["Trip"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan"
     )
